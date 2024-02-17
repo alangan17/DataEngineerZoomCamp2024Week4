@@ -12,8 +12,50 @@ mindmap
 ```
 
 ### 1. What is Analytics Engineering
+- Data Engineer
+  - Prepares and maintain the infrastructure the data team needs
+
+- Data Analyst
+  - Uses data to answer questions and solve business problems
+
+- Analytics Engineer
+  - Bridge the gap between Data Engineer and Data Analyst
+  - Bring in good software engineering practices to the efforts of data analysts and data scientists
+ 
+- Tools
+  - Data Ingestion
+    - Fivetran
+    - Mage
+  - Data Storage
+    - Snowflake
+    - Bigquery
+    - Redshift
+  - Data Modelling
+    - dbt
+    - Dataform
+  - Data Visualization
+    - Looker
+    - Mode
+    - Tableau
 
 ### 2. Data Modelling Concepts
+- ETL vs ELT
+  - ETL
+    - Slightly more stable and compliant data analysis
+    - Higher storage and compute costs
+  - ELT
+    - Faster and more flexible data analysis
+    - Lower cost and lower maintenance
+   
+- Kimball's Dimensional Modelling
+  - Deliver data understandable to business users
+  - Deliver fast query performance
+  - Fact tables (verbs)
+  - Dimension tables (nouns)
+
+- Other modelling approaches
+  - Inmon
+  - Data Vault
 
 ### 3. What is dbt
 
