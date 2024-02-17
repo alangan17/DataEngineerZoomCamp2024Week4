@@ -52,6 +52,10 @@ mindmap
   - Deliver fast query performance
   - Fact tables (verbs)
   - Dimension tables (nouns)
+  - Stages (think of a restaurant)
+    - Stage Area/ Bronze (Raw data)
+    - Processing Area/ Silver (raw data to data models)
+    - Presentation Area/ Gold (Present data to users)
 
 - Other modelling approaches
   - Inmon
