@@ -96,6 +96,15 @@ CSV format: [Datasets list](https://github.com/DataTalksClub/nyc-tlc-data/)
 Parquet format: https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page
 
 * Yellow taxi data - Years 2019 and 2020
+* 
+* Green taxi data - Years 2019 and 2020
+
+* fhv data - Year 2019.
+
+### Homework Setup
+
+#### Data Ingestion
+
 ```bash
 #!/bin/bash
 
@@ -124,7 +133,6 @@ done
 echo "All files have been downloaded and uploaded to GCS."
 ```
 
-* Green taxi data - Years 2019 and 2020
 ```bash
 #!/bin/bash
 
@@ -151,8 +159,7 @@ done
 
 echo "All files have been downloaded and uploaded to GCS."
 ```
-
-* fhv data - Year 2019.
+ 
 ```bash
 #!/bin/bash
 
@@ -180,7 +187,7 @@ done
 echo "All files have been downloaded and uploaded to GCS."
 ```
 
-Build the source tables in BigQuery
+#### Build the source tables in BigQuery
 ```sql
 CREATE OR REPLACE EXTERNAL TABLE `dez2024-413305.nytaxi.external_green_tripdata`(
     VendorID INTEGER,
