@@ -68,7 +68,7 @@ mindmap
     - Build and run dbt projects (.sql and .yml files)
     - Compile models into sql (just select, no DDL/ DML) and execute in Database
     - CLI interface to run dbt commands locally
-  - dbt CLpud
+  - dbt Cloud
     - SaaS application to develop and manage dbt projects
     - Job orchestration
     - Logging and Alerting
