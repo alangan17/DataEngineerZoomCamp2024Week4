@@ -252,10 +252,27 @@ OPTIONS (
   format = 'PARQUET',
   uris = ['gs://dez2024-wk4-ny-yellow-taxi/yellow_tripdata_*.parquet']
 );
+
+-- Create a non partitioned table from external table
+CREATE OR REPLACE TABLE dez2024-413305.nytaxi.yellow_tripdata AS
+SELECT * FROM dez2024-413305.nytaxi.external_yellow_tripdata;
 ```
 
 ```sql
+CREATE OR REPLACE EXTERNAL TABLE `dez2024-413305.nytaxi.external_fhv_tripdata`(
+  dispatching_base_num STRING,
+  pickup_datetime TIMESTAMP,
+  dropOff_datetime TIMESTAMP,
+  Affiliated_base_number STRING
+)
+OPTIONS (
+  format = 'PARQUET',
+  uris = ['gs://dez2024-wk4-ny-fhv/fhv_tripdata_*.parquet']
+);
 
+-- Create a non partitioned table from external table
+CREATE OR REPLACE TABLE dez2024-413305.nytaxi.fhv_tripdata AS
+SELECT * FROM dez2024-413305.nytaxi.external_fhv_tripdata;
 ```
 
 
