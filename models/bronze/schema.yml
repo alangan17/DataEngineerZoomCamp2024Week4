@@ -1,0 +1,11 @@
+version: 2
+
+sources:
+  - name: bronze
+    database: dez2024-413305
+    schema: nytaxi
+
+    tables:
+      - name: fhv_tripdata
+      - name: green_tripdata
+      - name: yellow_tripdata
