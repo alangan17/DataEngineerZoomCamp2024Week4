@@ -78,10 +78,137 @@ mindmap
 
 In this homework, we'll use the models developed during the week 4 videos and enhance the already presented dbt project using the already loaded Taxi data for fhv vehicles for year 2019 in our DWH.
 
-This means that in this homework we use the following data [Datasets list](https://github.com/DataTalksClub/nyc-tlc-data/)
+This means that in this homework we use the following data:
+
+CSV format: [Datasets list](https://github.com/DataTalksClub/nyc-tlc-data/)
+
+Parquet format: https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page
+
 * Yellow taxi data - Years 2019 and 2020
-* Green taxi data - Years 2019 and 2020 
-* fhv data - Year 2019. 
+```bash
+#!/bin/bash
+
+# Create the bucket in GCS
+# Set the bucket name where you want to upload the files
+BUCKET_NAME=dez2024-wk4-ny-yellow-taxi
+# Base URL for the files
+BASE_URL=https://d37ci6vzurychx.cloudfront.net/trip-data
+
+# Loop through all the months
+for YEAR in {2019..2020}; do
+  for MONTH in {01..12}; do
+    # Form the file name based on the year and month
+    FILE_NAME=yellow_tripdata_$YEAR-$MONTH.parquet
+    # Download the file
+    echo "Downloading $FILE_NAME..."
+    curl -O "$BASE_URL/$FILE_NAME"
+    # Upload the file to GCS
+    echo "Uploading $FILE_NAME to GCS..."
+    gsutil cp $FILE_NAME gs://$BUCKET_NAME/$FILE_NAME
+    # Optionally, remove the file after upload to save space
+    rm $FILE_NAME
+  done
+done
+
+echo "All files have been downloaded and uploaded to GCS."
+```
+
+* Green taxi data - Years 2019 and 2020
+```bash
+#!/bin/bash
+
+# Set the bucket name where you want to upload the files
+BUCKET_NAME=dez2024-wk4-ny-green-taxi
+# Base URL for the files
+BASE_URL=https://d37ci6vzurychx.cloudfront.net/trip-data
+
+# Loop through all the months
+for YEAR in {2019..2020}; do
+  for MONTH in {01..12}; do
+    # Form the file name based on the year and month
+    FILE_NAME=green_tripdata_$YEAR-$MONTH.parquet
+    # Download the file
+    echo "Downloading $FILE_NAME..."
+    curl -O "$BASE_URL/$FILE_NAME"
+    # Upload the file to GCS
+    echo "Uploading $FILE_NAME to GCS..."
+    gsutil cp $FILE_NAME gs://$BUCKET_NAME/$FILE_NAME
+    # Optionally, remove the file after upload to save space
+    rm $FILE_NAME
+  done
+done
+
+echo "All files have been downloaded and uploaded to GCS."
+```
+
+* fhv data - Year 2019.
+```bash
+#!/bin/bash
+
+# Set the bucket name where you want to upload the files
+BUCKET_NAME=dez2024-wk4-ny-fhv
+# Base URL for the files
+BASE_URL=https://d37ci6vzurychx.cloudfront.net/trip-data
+
+# Loop through all the months
+for YEAR in {2019..2019}; do
+  for MONTH in {01..12}; do
+    # Form the file name based on the year and month
+    FILE_NAME=fhv_tripdata_$YEAR-$MONTH.parquet
+    # Download the file
+    echo "Downloading $FILE_NAME..."
+    curl -O "$BASE_URL/$FILE_NAME"
+    # Upload the file to GCS
+    echo "Uploading $FILE_NAME to GCS..."
+    gsutil cp $FILE_NAME gs://$BUCKET_NAME/$FILE_NAME
+    # Optionally, remove the file after upload to save space
+    rm $FILE_NAME
+  done
+done
+
+echo "All files have been downloaded and uploaded to GCS."
+```
+
+Build the source tables in BigQuery
+```sql
+CREATE OR REPLACE EXTERNAL TABLE `dez2024-413305.nytaxi.external_green_tripdata`(
+    VendorID INTEGER,
+    lpep_pickup_datetime TIMESTAMP,
+    lpep_dropoff_datetime TIMESTAMP,
+    store_and_fwd_flag STRING,
+    RatecodeID FLOAT64,
+    PULocationID INTEGER,
+    DOLocationID INTEGER,
+    passenger_count FLOAT64,
+    trip_distance FLOAT64,
+    fare_amount FLOAT64,
+    extra FLOAT64,
+    mta_tax FLOAT64,
+    tip_amount FLOAT64,
+    tolls_amount FLOAT64,
+    /*
+    Dropped this col as:
+    1. No usage in the homework
+    2. Some dataset is INT64
+    3. Some dataset is Double (FLOAT64)
+    */
+    --ehail_fee FLOAT64, 
+    improvement_surcharge FLOAT64,
+    total_amount FLOAT64,
+    payment_type FLOAT64,
+    trip_type FLOAT64,
+    congestion_surcharge FLOAT64
+)
+OPTIONS (
+  format = 'PARQUET',
+  uris = ['gs://dez2024-wk4-ny-green-taxi/green_tripdata_*.parquet']
+);
+
+-- Create a non partitioned table from external table
+CREATE OR REPLACE TABLE dez2024-413305.nytaxi.green_tripdata AS
+SELECT * FROM dez2024-413305.nytaxi.external_green_tripdata;
+```
+
 
 We will use the data loaded for:
 
