@@ -103,7 +103,7 @@ Parquet format: https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page
 
 ### Homework Setup
 
-#### Data Ingestion
+#### Data Ingestion from data source to GCS
 
 ```bash
 #!/bin/bash
