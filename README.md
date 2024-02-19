@@ -227,6 +227,37 @@ CREATE OR REPLACE TABLE dez2024-413305.nytaxi.green_tripdata AS
 SELECT * FROM dez2024-413305.nytaxi.external_green_tripdata;
 ```
 
+```sql
+CREATE OR REPLACE EXTERNAL TABLE `dez2024-413305.nytaxi.external_yellow_tripdata`(
+  VendorID INTEGER,
+  tpep_pickup_datetime TIMESTAMP,
+  tpep_dropoff_datetime TIMESTAMP,
+  passenger_count FLOAT64,
+  trip_distance FLOAT64,
+  RatecodeID FLOAT64,
+  store_and_fwd_flag STRING,
+  PULocationID INTEGER,
+  DOLocationID INTEGER,
+  payment_type INTEGER,
+  fare_amount FLOAT64,
+  extra FLOAT64,
+  mta_tax FLOAT64,
+  tip_amount FLOAT64,
+  tolls_amount FLOAT64,
+  improvement_surcharge FLOAT64,
+  total_amount FLOAT64,
+  congestion_surcharge FLOAT64
+)
+OPTIONS (
+  format = 'PARQUET',
+  uris = ['gs://dez2024-wk4-ny-yellow-taxi/yellow_tripdata_*.parquet']
+);
+```
+
+```sql
+
+```
+
 
 We will use the data loaded for:
 
