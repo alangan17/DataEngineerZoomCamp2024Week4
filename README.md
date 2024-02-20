@@ -78,6 +78,26 @@ mindmap
 ### 4. Starting a dbt project
 
 ### 5. Develop dbt models
+- dbt models
+  - jinja sql
+  - compile to sql
+  - materialization strategy
+    - view
+    - table
+    - incremental (Update/ Insert table)
+    - ephemeral
+  - FROM
+    - sources
+      - physical tables/ views defined in yml files
+    - seeds
+      - static/ infrequently change CSV files
+  - Macros
+    - reusable SQL code
+  - Variables
+- packages.yml
+  - like libraries of other programming languages
+  - do not reinventing the wheel!
+- project.yml
 
 ### 6. Testing and documenting dbt models
 
@@ -263,6 +283,9 @@ CREATE OR REPLACE EXTERNAL TABLE `dez2024-413305.nytaxi.external_fhv_tripdata`(
   dispatching_base_num STRING,
   pickup_datetime TIMESTAMP,
   dropOff_datetime TIMESTAMP,
+  PUlocationID INTEGER,
+  DOlocationID INTEGER,
+  SR_Flag INTEGER,
   Affiliated_base_number STRING
 )
 OPTIONS (
@@ -293,7 +316,7 @@ instead. If you have access to GCP, you don't need to do it for local Postgres -
 You'll need to have completed the ["Build the first dbt models"](https://www.youtube.com/watch?v=UVI30Vxzd6c) video. 
 - It's the same as running *dbt build*
 - It applies a _limit 100_ to all of our models
-- It applies a _limit 100_ only to our staging models
+- -> It applies a _limit 100_ only to our staging models
 - Nothing
 
 ### Question 2: 
@@ -303,7 +326,7 @@ You'll need to have completed the ["Build the first dbt models"](https://www.you
 - The code that has been merged into the main branch
 - The code that is behind the object on the dbt_cloud_pr_ schema
 - The code from any development branch that has been opened based on main
-- The code from a development branch requesting a merge to main
+- -> The code from a development branch requesting a merge to main
 
 
 ### Question 3 (2 points)

@@ -1,0 +1,111 @@
+blocks:
+- all_upstream_blocks_executed: true
+  color: null
+  configuration:
+    file_source:
+      path: data_loaders/load_api_data.py
+  downstream_blocks:
+  - split_chunks
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: load_api_data
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_loader
+  upstream_blocks: []
+  uuid: load_api_data
+- all_upstream_blocks_executed: true
+  color: null
+  configuration:
+    dynamic: true
+  downstream_blocks:
+  - change_schema
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: split_chunks
+  retry_config: null
+  status: executed
+  timeout: null
+  type: transformer
+  upstream_blocks:
+  - load_api_data
+  uuid: split_chunks
+- all_upstream_blocks_executed: true
+  color: null
+  configuration:
+    dynamic: false
+    reduce_output: false
+  downstream_blocks:
+  - save_to_gcs
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: change_schema
+  retry_config: null
+  status: executed
+  timeout: null
+  type: transformer
+  upstream_blocks:
+  - split_chunks
+  uuid: change_schema
+- all_upstream_blocks_executed: true
+  color: null
+  configuration:
+    file_source:
+      path: data_exporters/save_to_gcs.py
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: save_to_gcs
+  retry_config: null
+  status: updated
+  timeout: null
+  type: data_exporter
+  upstream_blocks:
+  - change_schema
+  uuid: save_to_gcs
+cache_block_output_in_memory: false
+callbacks: []
+concurrency_config:
+  block_run_limit: 5
+  pipeline_run_limit: 3
+conditionals: []
+created_at: '2024-02-19 19:30:00.236450+00:00'
+data_integration: null
+description: null
+executor_config: {}
+executor_count: 1
+executor_type: null
+extensions: {}
+name: api_to_gcs
+notification_config: {}
+remote_variables_dir: null
+retry_config: {}
+run_pipeline_in_one_process: false
+settings:
+  triggers: null
+spark_config: {}
+tags: []
+type: python
+uuid: api_to_gcs
+variables:
+  l_gcp_key_path: /home/src/keys/gcp_sa.json
+  l_gcp_project_id: dez2024-413305
+  l_gcs_bucket_name: dez2024-wk-nytaxi-mage-yellow
+  src_base_url: https://d37ci6vzurychx.cloudfront.net/trip-data
+  src_data_ext: parquet
+  src_data_month: '02'
+  src_data_type: yellow_tripdata
+  src_data_year: 2019
+  t_chunk_size: 1000000
+  t_schema_name: yello_taxi_schema
+variables_dir: /home/src/mage_data/dezoomcampwk4
+widgets: []
