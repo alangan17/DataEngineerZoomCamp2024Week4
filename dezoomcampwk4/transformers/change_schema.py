@@ -4,6 +4,7 @@ if 'test' not in globals():
     from mage_ai.data_preparation.decorators import test
 
 import duckdb
+import pandas as pd
 
 @transformer
 def transform(data, *args, **kwargs):
@@ -26,6 +27,7 @@ def transform(data, *args, **kwargs):
         "PULocationID": 0,
         "DOLocationID": 0,
         "payment_type": -999,
+        "ehail_fee": 0,
     }
 
     schemas = {
@@ -49,6 +51,38 @@ def transform(data, *args, **kwargs):
             "total_amount": "float64",
             "congestion_surcharge": "float64",
             "airport_fee": "float64"  # Note: Given as 0 non-null, indicating it may often be empty
+        },
+
+        "green_taxi_schema": {
+            "VendorID": "int64",
+            "lpep_pickup_datetime": "datetime64[ns]",
+            "lpep_dropoff_datetime": "datetime64[ns]",
+            "passenger_count": "int64",
+            "trip_distance": "float64",
+            "RatecodeID": "float64",
+            "store_and_fwd_flag": "str",
+            "PULocationID": "int64",
+            "DOLocationID": "int64",
+            "payment_type": "int64",
+            "fare_amount": "float64",
+            "extra": "float64",
+            "mta_tax": "float64",
+            "tip_amount": "float64",
+            "tolls_amount": "float64",
+            "ehail_fee": "float64",
+            "improvement_surcharge": "float64",
+            "total_amount": "float64",
+            "congestion_surcharge": "float64",
+        },
+
+        "fhv_taxi_schema": {
+            "dispatching_base_num": "str",
+            "pickup_datetime": "datetime64[ns]",
+            "dropOff_datetime": "datetime64[ns]",
+            "PUlocationID": "int64",
+            "DOlocationID": "int64",
+            "SR_Flag": "int64",
+            "Affiliated_base_number": "str",
         }
     }
 
@@ -68,9 +102,8 @@ def transform(data, *args, **kwargs):
             # Use the pandas nullable integer and string types where appropriate
             df[column] = df[column].astype(dtype)
         else:
-            # Handle missing columns by adding them with appropriate missing values
-            df[column] = pd.NA
-            df[column] = df[column].astype(dtype)
+            print(f"{column} is not in the schema")
+            df[column] = df[column]
     
     print("Schema after changing:")
     print(df.info())
