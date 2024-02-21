@@ -124,122 +124,15 @@ Parquet format: https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page
 ### Homework Setup
 
 #### Data Ingestion from data source to GCS
-
-```bash
-#!/bin/bash
-
-# Create the bucket in GCS
-# Set the bucket name where you want to upload the files
-BUCKET_NAME=dez2024-wk4-ny-yellow-taxi
-# Base URL for the files
-BASE_URL=https://d37ci6vzurychx.cloudfront.net/trip-data
-
-# Loop through all the months
-for YEAR in {2019..2020}; do
-  for MONTH in {01..12}; do
-    # Form the file name based on the year and month
-    FILE_NAME=yellow_tripdata_$YEAR-$MONTH.parquet
-    # Download the file
-    echo "Downloading $FILE_NAME..."
-    curl -O "$BASE_URL/$FILE_NAME"
-    # Upload the file to GCS
-    echo "Uploading $FILE_NAME to GCS..."
-    gsutil cp $FILE_NAME gs://$BUCKET_NAME/$FILE_NAME
-    # Optionally, remove the file after upload to save space
-    rm $FILE_NAME
-  done
-done
-
-echo "All files have been downloaded and uploaded to GCS."
-```
-
-```bash
-#!/bin/bash
-
-# Set the bucket name where you want to upload the files
-BUCKET_NAME=dez2024-wk4-ny-green-taxi
-# Base URL for the files
-BASE_URL=https://d37ci6vzurychx.cloudfront.net/trip-data
-
-# Loop through all the months
-for YEAR in {2019..2020}; do
-  for MONTH in {01..12}; do
-    # Form the file name based on the year and month
-    FILE_NAME=green_tripdata_$YEAR-$MONTH.parquet
-    # Download the file
-    echo "Downloading $FILE_NAME..."
-    curl -O "$BASE_URL/$FILE_NAME"
-    # Upload the file to GCS
-    echo "Uploading $FILE_NAME to GCS..."
-    gsutil cp $FILE_NAME gs://$BUCKET_NAME/$FILE_NAME
-    # Optionally, remove the file after upload to save space
-    rm $FILE_NAME
-  done
-done
-
-echo "All files have been downloaded and uploaded to GCS."
-```
- 
-```bash
-#!/bin/bash
-
-# Set the bucket name where you want to upload the files
-BUCKET_NAME=dez2024-wk4-ny-fhv
-# Base URL for the files
-BASE_URL=https://d37ci6vzurychx.cloudfront.net/trip-data
-
-# Loop through all the months
-for YEAR in {2019..2019}; do
-  for MONTH in {01..12}; do
-    # Form the file name based on the year and month
-    FILE_NAME=fhv_tripdata_$YEAR-$MONTH.parquet
-    # Download the file
-    echo "Downloading $FILE_NAME..."
-    curl -O "$BASE_URL/$FILE_NAME"
-    # Upload the file to GCS
-    echo "Uploading $FILE_NAME to GCS..."
-    gsutil cp $FILE_NAME gs://$BUCKET_NAME/$FILE_NAME
-    # Optionally, remove the file after upload to save space
-    rm $FILE_NAME
-  done
-done
-
-echo "All files have been downloaded and uploaded to GCS."
-```
+1. Create the buckets in GCS
+2. Run the mage pipeline `api_to_gcs_bulk`
 
 #### Build the source tables in BigQuery
 ```sql
-CREATE OR REPLACE EXTERNAL TABLE `dez2024-413305.nytaxi.external_green_tripdata`(
-    VendorID INTEGER,
-    lpep_pickup_datetime TIMESTAMP,
-    lpep_dropoff_datetime TIMESTAMP,
-    store_and_fwd_flag STRING,
-    RatecodeID FLOAT64,
-    PULocationID INTEGER,
-    DOLocationID INTEGER,
-    passenger_count FLOAT64,
-    trip_distance FLOAT64,
-    fare_amount FLOAT64,
-    extra FLOAT64,
-    mta_tax FLOAT64,
-    tip_amount FLOAT64,
-    tolls_amount FLOAT64,
-    /*
-    Dropped this col as:
-    1. No usage in the homework
-    2. Some dataset is INT64
-    3. Some dataset is Double (FLOAT64)
-    */
-    --ehail_fee FLOAT64, 
-    improvement_surcharge FLOAT64,
-    total_amount FLOAT64,
-    payment_type FLOAT64,
-    trip_type FLOAT64,
-    congestion_surcharge FLOAT64
-)
+CREATE OR REPLACE EXTERNAL TABLE `dez2024-413305.nytaxi.external_green_tripdata`
 OPTIONS (
   format = 'PARQUET',
-  uris = ['gs://dez2024-wk4-ny-green-taxi/green_tripdata_*.parquet']
+  uris = ['gs://dez2024-wk-nytaxi-mage-green/green_tripdata_*.parquet']
 );
 
 -- Create a non partitioned table from external table
@@ -248,29 +141,10 @@ SELECT * FROM dez2024-413305.nytaxi.external_green_tripdata;
 ```
 
 ```sql
-CREATE OR REPLACE EXTERNAL TABLE `dez2024-413305.nytaxi.external_yellow_tripdata`(
-  VendorID INTEGER,
-  tpep_pickup_datetime TIMESTAMP,
-  tpep_dropoff_datetime TIMESTAMP,
-  passenger_count FLOAT64,
-  trip_distance FLOAT64,
-  RatecodeID FLOAT64,
-  store_and_fwd_flag STRING,
-  PULocationID INTEGER,
-  DOLocationID INTEGER,
-  payment_type INTEGER,
-  fare_amount FLOAT64,
-  extra FLOAT64,
-  mta_tax FLOAT64,
-  tip_amount FLOAT64,
-  tolls_amount FLOAT64,
-  improvement_surcharge FLOAT64,
-  total_amount FLOAT64,
-  congestion_surcharge FLOAT64
-)
+CREATE OR REPLACE EXTERNAL TABLE `dez2024-413305.nytaxi.external_yellow_tripdata`
 OPTIONS (
   format = 'PARQUET',
-  uris = ['gs://dez2024-wk4-ny-yellow-taxi/yellow_tripdata_*.parquet']
+  uris = ['gs://dez2024-wk-nytaxi-mage-yellow/yellow_tripdata_*.parquet']
 );
 
 -- Create a non partitioned table from external table
@@ -279,18 +153,10 @@ SELECT * FROM dez2024-413305.nytaxi.external_yellow_tripdata;
 ```
 
 ```sql
-CREATE OR REPLACE EXTERNAL TABLE `dez2024-413305.nytaxi.external_fhv_tripdata`(
-  dispatching_base_num STRING,
-  pickup_datetime TIMESTAMP,
-  dropOff_datetime TIMESTAMP,
-  PUlocationID INTEGER,
-  DOlocationID INTEGER,
-  SR_Flag INTEGER,
-  Affiliated_base_number STRING
-)
+CREATE OR REPLACE EXTERNAL TABLE `dez2024-413305.nytaxi.external_fhv_tripdata`
 OPTIONS (
   format = 'PARQUET',
-  uris = ['gs://dez2024-wk4-ny-fhv/fhv_tripdata_*.parquet']
+  uris = ['gs://dez2024-wk-nytaxi-mage-fhv/fhv_tripdata_*.parquet']
 );
 
 -- Create a non partitioned table from external table
@@ -339,8 +205,10 @@ Create a core model similar to fact trips, but selecting from stg_fhv_tripdata a
 Similar to what we've done in fact_trips, keep only records with known pickup and dropoff locations entries for pickup and dropoff locations. 
 Run the dbt model without limits (is_test_run: false).
 
+![alt text](</assets/question3.png>)
+
 - 12998722
-- 22998722
+- -> 22998722
 - 32998722
 - 42998722
 
