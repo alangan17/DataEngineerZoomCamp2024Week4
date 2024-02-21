@@ -355,6 +355,11 @@ Create a dashboard with some tiles that you find interesting to explore the data
 - Yellow
 - FHV and Green
 
+### Problems encountered
+#### data out of range
+
+![Alt text](/assets/fhv_date_col_out_of_bound.png)
+
 
 ## Submitting the solutions
 
