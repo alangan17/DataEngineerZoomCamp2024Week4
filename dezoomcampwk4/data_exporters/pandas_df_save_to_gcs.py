@@ -16,7 +16,9 @@ def export_data_to_google_cloud_storage(data, **kwargs) -> None:
     config_profile = 'default'
 
     bucket_name = kwargs.get('l_gcs_bucket_name')
-    object_key = data.iloc[0]['chunk_output_filename']
+    output_filename = data.iloc[0]['chunk_output_filename']
+
+    object_key = output_filename
 
     print(f"Attempt to save data to {bucket_name}/{object_key}")
 

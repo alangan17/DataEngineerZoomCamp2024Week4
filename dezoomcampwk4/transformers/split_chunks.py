@@ -44,6 +44,7 @@ def read_chunks(
             "chunk_seq": chunk_seq,
             "chunk_size": chunk_size,
             "chunk_query": chunk_query,
+            "file_path": file_path,
             "chunk_output_filename": f"{filename}_{chunk_seq}.{filename_ext}"
         }
 

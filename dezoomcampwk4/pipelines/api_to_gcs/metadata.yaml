@@ -22,7 +22,7 @@ blocks:
   configuration:
     dynamic: true
   downstream_blocks:
-  - change_schema
+  - change_schema__save_to_gcs
   executor_config: null
   executor_type: local_python
   has_callback: false
@@ -40,38 +40,19 @@ blocks:
   configuration:
     dynamic: false
     reduce_output: false
-  downstream_blocks:
-  - save_to_gcs
-  executor_config: null
-  executor_type: local_python
-  has_callback: false
-  language: python
-  name: change_schema
-  retry_config: null
-  status: updated
-  timeout: null
-  type: transformer
-  upstream_blocks:
-  - split_chunks
-  uuid: change_schema
-- all_upstream_blocks_executed: false
-  color: null
-  configuration:
-    file_source:
-      path: data_exporters/save_to_gcs.py
   downstream_blocks: []
   executor_config: null
   executor_type: local_python
   has_callback: false
   language: python
-  name: save_to_gcs
+  name: change_schema__save_to_gcs
   retry_config: null
-  status: updated
+  status: executed
   timeout: null
-  type: data_exporter
+  type: transformer
   upstream_blocks:
-  - change_schema
-  uuid: save_to_gcs
+  - split_chunks
+  uuid: change_schema__save_to_gcs
 cache_block_output_in_memory: false
 callbacks: []
 concurrency_config:
@@ -106,6 +87,6 @@ variables:
   src_data_type: yellow_tripdata
   src_data_year: 2019
   t_chunk_size: 1000000
-  t_schema_name: yello_taxi_schema
+  t_schema_name: yellow_taxi_schema
 variables_dir: /home/src/mage_data/dezoomcampwk4
 widgets: []
