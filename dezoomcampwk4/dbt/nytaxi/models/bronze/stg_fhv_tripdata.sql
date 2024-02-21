@@ -71,7 +71,7 @@ with
     base as (
         select {{ dbt_utils.star(from=source("bronze", "fhv_tripdata")) }}
         from {{ source("bronze", "fhv_tripdata") }}
-        {% if var("is_test_run", default=true) %}
+        {% if var("is_test_run", default=false) %}
             -- To run in PRD `dbt build -m stg_fhv_tripdata --vars '{'is_test_run':'false'}'`
             -- limit 100
         {% endif %}
@@ -88,13 +88,13 @@ with
         from base
     ),
 
-    filter_pickup_date_after_2019 as (
+    filter_pickup_date_2019 as (
         select *
         from change_data_type
-        where pickup_datetime >= '2019-01-01'
+        where EXTRACT(YEAR FROM pickup_datetime) = 2019
     ),
-
-    final as (select * from filter_pickup_date_after_2019)
+    
+    final as (select * from filter_pickup_date_2019)
 
 select *
 from final

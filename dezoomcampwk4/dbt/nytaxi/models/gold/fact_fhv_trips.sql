@@ -14,10 +14,8 @@ with
         from {{ ref("dim_zones") }}
         where borough != 'Unknown'
     ),
-    final as (
+    joined_location as (
         select
-            trips_unioned.`vendor_id`,
-            trips_unioned.`ratecode_id`,
             trips_unioned.`pickup_location_id`,
             pickup_zone.borough as pickup_borough,
             pickup_zone.zone as pickup_zone,
@@ -25,21 +23,7 @@ with
             dropoff_zone.borough as dropoff_borough,
             dropoff_zone.zone as dropoff_zone,
             trips_unioned.`pickup_datetime`,
-            trips_unioned.`dropoff_datetime`,
-            trips_unioned.`store_and_fwd_flag`,
-            trips_unioned.`passenger_count`,
-            trips_unioned.`trip_distance`,
-            trips_unioned.`fare_amount`,
-            trips_unioned.`extra`,
-            trips_unioned.`mta_tax`,
-            trips_unioned.`tip_amount`,
-            trips_unioned.`tolls_amount`,
-            trips_unioned.`improvement_surcharge`,
-            trips_unioned.`total_amount`,
-            trips_unioned.`payment_type`,
-            trips_unioned.`congestion_surcharge`,
-            trips_unioned.`payment_type_description`
-
+            trips_unioned.`dropoff_datetime`
         from trips_unioned
         inner join
             dim_zones as pickup_zone
@@ -47,6 +31,10 @@ with
         inner join
             dim_zones as dropoff_zone
             on trips_unioned.dropoff_location_id = dropoff_zone.locationid
+    ),
+    final as (
+        select *
+        from joined_location
     )
 select *
 from final
