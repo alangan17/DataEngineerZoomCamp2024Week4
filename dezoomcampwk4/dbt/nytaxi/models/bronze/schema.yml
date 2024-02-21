@@ -9,3 +9,13 @@ sources:
       - name: fhv_tripdata
       - name: green_tripdata
       - name: yellow_tripdata
+
+models:
+  - name: stg_green_tripdata
+    columns:
+      - name: trip_id
+        tests:
+          - unique:
+              severity: error
+          - not_null:
+              severity: error
