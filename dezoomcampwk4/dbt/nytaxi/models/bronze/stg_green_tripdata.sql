@@ -184,7 +184,7 @@ with
             *,
             {{ get_payment_type_description("payment_type") }}
             as payment_type_description
-        from change_data_type
+        from add_trip_id
     ),
 
     final as (select * from add_payment_type_desc)
