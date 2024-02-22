@@ -9,48 +9,49 @@ Analytics Engineering using dbt &amp; BigQuery
 mindmap
     id1)Week 4: Analytics Engineering(
         1.👩‍🍳People
-            Data Engineer
-            Analytics Engineer
-            Data Analyst
+            id2["Data Engineer"]
+            id3["Analytics Engineer"]
+            id4["Data Analyst"]
         2.Data Modelling
-            ETL vs ELT
-                ETL
-                    More stable and compliant
-                    Higher costs
-                ELT
-                    Faster and flexible
-                    Lower cost
-            Kimball's Dimensional Modelling
-                Fact tables
-                Dimension tables
-                Stages
-                    Stage Area/ Bronze
-                    Processing Area/ Silver
-                    Presentation Area/ Gold
+            id5["ETL vs ELT"]
+                id6["ETL"]
+                    id7["More stable and compliant"]
+                    id8["Higher costs"]
+                id9["ELT"]
+                    id10["Faster and flexible"]
+                    id11["Lower cost"]
+            id12["Kimball's Dimensional Modelling"]
+                id13["Fact tables"]
+                id14["Dimension tables"]
+                id15["Stages"]
+                    id16["Stage Area/ Bronze"]
+                    id17["Processing Area/ Silver"]
+                    id18["Presentation Area/ Gold"]
         3.dbt
-                dbt Core
-                dbt Cloud
+            id19["dbt Core"]
+            id20["dbt Cloud"]
         4.🛠️Develop dbt models
-            jinja sql
-            materialization strategy
-                view
-                table
-                incremental
-                ephemeral
-            FROM sources or seeds
-            Macros by packages.yml or DIY
-            Variables in models or project.yml
+            id21["jinja sql"]
+            id22["materialization strategy"]
+                id23["view"]
+                id24["table"]
+                id25["incremental"]
+                id26["ephemeral"]
+            id27["FROM sources or seeds"]
+            id28["Macros by packages.yml or DIY"]
+            id29["Variables in models or project.yml"]
         5.🧪Testing dbt models
-            Built-in tests
-            Custom tests
+            id30["Built-in tests"]
+            id31["Custom tests"]
         6.📄Documentation
-            Model source code
-            Model schema
-            Lineage
+            id32["Model source code"]
+            id33["Model schema"]
+            id34["Lineage"]
         7.🚧Deploy a dbt project
-            Continuous Integration upon PR
-            Continuous Deployment
+            id35["Continuous Integration upon PR"]
+            id36["Continuous Deployment"]
         8.👀Data Visualization in Google Looker
+
 ```
 
 ### 1. What is Analytics Engineering
