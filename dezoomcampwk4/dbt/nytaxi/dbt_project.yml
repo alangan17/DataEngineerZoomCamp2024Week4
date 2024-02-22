@@ -38,8 +38,11 @@ clean-targets:         # directories to be removed by `dbt clean`
 models:
   nytaxi:
     # Applies to all files under models/example/
-    example:
+    bronze:
       +materialized: table
+    gold:
+      +materialized: table
+
 
 seeds:
   nytaxi:
