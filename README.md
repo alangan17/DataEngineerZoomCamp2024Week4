@@ -50,8 +50,7 @@ mindmap
         7.🚧Deploy a dbt project
             Continuous Integration upon PR
             Continuous Deployment
-        8.👀Visualization of the transformed data
-            Google Looker
+        8.👀Data Visualization in Google Looker
 ```
 
 ### 1. What is Analytics Engineering
