@@ -149,7 +149,7 @@ with
         where VendorID is not null
         {% if var('is_test_run', default=true)%}
         -- To run in PRD `dbt build --m stg_yellow_tripdata --vars '{'is_test_run':'false'}'`
-        limit 100
+        --limit 100
         {% endif %}
     ),
 
