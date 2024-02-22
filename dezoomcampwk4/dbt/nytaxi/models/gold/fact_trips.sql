@@ -76,6 +76,7 @@ with
             trips_unioned.`payment_type`,
             trips_unioned.`congestion_surcharge`,
             trips_unioned.`payment_type_description`
+            trips_unioned.`service_type`
 
         from trips_unioned
         inner join
