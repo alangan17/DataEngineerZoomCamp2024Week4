@@ -8,7 +8,50 @@ Analytics Engineering using dbt &amp; BigQuery
 ```mermaid
 mindmap
     id1)Week 4: Analytics Engineering(
-        
+        1.👩‍🍳People
+            Data Engineer
+            Analytics Engineer
+            Data Analyst
+        2.Data Modelling
+            ETL vs ELT
+                ETL
+                    More stable and compliant
+                    Higher costs
+                ELT
+                    Faster and flexible
+                    Lower cost
+            Kimball's Dimensional Modelling
+                Fact tables
+                Dimension tables
+                Stages
+                    Stage Area/ Bronze
+                    Processing Area/ Silver
+                    Presentation Area/ Gold
+        3.dbt
+                dbt Core
+                dbt Cloud
+        4.🛠️Develop dbt models
+            jinja sql
+            materialization strategy
+                view
+                table
+                incremental
+                ephemeral
+            FROM sources or seeds
+            Macros by packages.yml or DIY
+            Variables in models or project.yml
+        5.🧪Testing dbt models
+            Built-in tests
+            Custom tests
+        6.📄Documentation
+            Model source code
+            Model schema
+            Lineage
+        7.🚧Deploy a dbt project
+            Continuous Integration upon PR
+            Continuous Deployment
+        8.👀Visualization of the transformed data
+            Google Looker
 ```
 
 ### 1. What is Analytics Engineering
