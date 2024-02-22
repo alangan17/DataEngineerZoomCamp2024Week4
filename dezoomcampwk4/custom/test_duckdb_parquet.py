@@ -13,10 +13,12 @@ def transform_custom(*args, **kwargs):
         Anything (e.g. data frame, dictionary, array, int, str, etc.)
     """
     df = duckdb.sql(f"""
-        SELECT SUM(passenger_count) AS passenger_count
+        -- SELECT SUM(passenger_count) AS passenger_count
         -- FROM read_parquet('/home/src/data/test/*.parquet') --11030483 12015913
-        FROM read_parquet('/home/src/data/yellow_tripdata_2019-02.parquet')
+        DESCRIBE FROM read_parquet('/home/src/data/yellow_tripdata_2019-01_1.parquet')
     """).df()
+
+    print(df)
 
     return df
 

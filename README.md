@@ -63,12 +63,12 @@ mindmap
 
 ### 3. What is dbt
 - Data Transformation Tool
-  - dbt Core
+  - [dbt Core](https://github.com/dbt-labs/dbt-core)
     - Open source and free to use
     - Build and run dbt projects (.sql and .yml files)
     - Compile models into sql (just select, no DDL/ DML) and execute in Database
     - CLI interface to run dbt commands locally
-  - dbt Cloud
+  - [dbt Cloud](https://www.getdbt.com/)
     - SaaS application to develop and manage dbt projects
     - Job orchestration
     - Logging and Alerting
@@ -100,10 +100,40 @@ mindmap
 - project.yml
 
 ### 6. Testing and documenting dbt models
+- Tests - Assertions to models
+  - Built-in tests
+  - Custom tests
+- Documentation
+  - Model source code
+  - Model schema
+  - Lineage
 
 ### 7. Deploy a dbt project
+- Continuous Integration (CI):
+  1. Create an Production environment
+  2. Create a job `CI`, it will be triggered when a pull request is opened
+  ![alt text](</assets/dbt_pr_ci1.png>)
+
+  ![alt text](</assets/dbt_pr_ci2.png>)
+
+  ![alt text](</assets/dbt_pr_ci3.png>)
+
+- Continuous Deployment (CD):
+  1. Under the Production environment, create a job `Deploy`
+  2. (Optional) Set the trigger to `Deploy` job (e.g. time based, or after other deploy job)
+
+  ![alt text](</assets/dbt_cd1.png>)
+
+  ![alt text](</assets/dbt_cd2.png>)
+
+  ![alt text](</assets/dbt_cd3.png>)
+
+  ![alt text](</assets/dbt_docs1.png>)
+
+  ![alt text](</assets/dbt_docs2.png>)
 
 ### 8. Visualization of the transformed data
+- [Google Looker](https://lookerstudio.google.com/)
 
 ## Module 4 Homework 
 
@@ -141,11 +171,33 @@ SELECT * FROM dez2024-413305.nytaxi.external_green_tripdata;
 ```
 
 ```sql
-CREATE OR REPLACE EXTERNAL TABLE `dez2024-413305.nytaxi.external_yellow_tripdata`
+CREATE OR REPLACE EXTERNAL TABLE `dez2024-413305.nytaxi.external_yellow_tripdata`(
+    VendorID BIGINT,
+    tpep_pickup_datetime TIMESTAMP,
+    tpep_dropoff_datetime TIMESTAMP,
+    passenger_count BIGINT,
+    trip_distance FLOAT64,
+    RatecodeID FLOAT64,
+    store_and_fwd_flag STRING,
+    PULocationID BIGINT,
+    DOLocationID BIGINT,
+    payment_type BIGINT,
+    fare_amount FLOAT64,
+    extra FLOAT64,
+    mta_tax FLOAT64,
+    tip_amount FLOAT64,
+    tolls_amount FLOAT64,
+    improvement_surcharge FLOAT64,
+    total_amount FLOAT64,
+    congestion_surcharge FLOAT64,
+    airport_fee FLOAT64,
+    chunk_output_filename STRING
+)
 OPTIONS (
   format = 'PARQUET',
   uris = ['gs://dez2024-wk-nytaxi-mage-yellow/yellow_tripdata_*.parquet']
 );
+
 
 -- Create a non partitioned table from external table
 CREATE OR REPLACE TABLE dez2024-413305.nytaxi.yellow_tripdata AS
@@ -205,7 +257,7 @@ Create a core model similar to fact trips, but selecting from stg_fhv_tripdata a
 Similar to what we've done in fact_trips, keep only records with known pickup and dropoff locations entries for pickup and dropoff locations. 
 Run the dbt model without limits (is_test_run: false).
 
-![alt text](</assets/question3.png>)
+![alt text](</assets/hw_question3.png>)
 
 - 12998722
 - -> 22998722
@@ -218,9 +270,11 @@ Run the dbt model without limits (is_test_run: false).
 
 Create a dashboard with some tiles that you find interesting to explore the data. One tile should show the amount of trips per month, as done in the videos for fact_trips, including the fact_fhv_trips data.
 
+![alt text](</assets/hw_question4.png>)
+
 - FHV
 - Green
-- Yellow
+- -> Yellow
 - FHV and Green
 
 ### Problems encountered

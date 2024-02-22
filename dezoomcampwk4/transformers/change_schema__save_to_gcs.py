@@ -94,8 +94,8 @@ def transform(data, *args, **kwargs):
     schemas = {
         "yellow_taxi_schema": {
             "VendorID": "int64",
-            "tpep_pickup_datetime": "datetime64[ns]",
-            "tpep_dropoff_datetime": "datetime64[ns]",
+            "tpep_pickup_datetime": "datetime64[us]",
+            "tpep_dropoff_datetime": "datetime64[us]",
             "passenger_count": "int64",
             "trip_distance": "float64",
             "RatecodeID": "float64",
@@ -116,8 +116,8 @@ def transform(data, *args, **kwargs):
 
         "green_taxi_schema": {
             "VendorID": "int64",
-            "lpep_pickup_datetime": "datetime64[ns]",
-            "lpep_dropoff_datetime": "datetime64[ns]",
+            "lpep_pickup_datetime": "datetime64[us]",
+            "lpep_dropoff_datetime": "datetime64[us]",
             "passenger_count": "int64",
             "trip_distance": "float64",
             "RatecodeID": "float64",
